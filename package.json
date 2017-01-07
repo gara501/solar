@@ -1,0 +1,22 @@
+{
+  "name": "solar",
+  "version": "1.0.0",
+  "description": "Babylon JS app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gara501/solar.git"
+  },
+  "keywords": [
+    "babylonjs"
+  ],
+  "author": "Andres Ramirez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gara501/solar/issues"
+  },
+  "homepage": "https://github.com/gara501/solar#readme"
+}
