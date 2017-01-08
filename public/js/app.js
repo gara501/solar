@@ -11,9 +11,9 @@ BjsApp.init = function() {
     
     // Camera
     var camera = new BABYLON.ArcRotateCamera("Camera", 0,
-		0, 40, BABYLON.Vector3.Zero(),  scene);
+		0, 550, BABYLON.Vector3.Zero(),  scene);
     camera.attachControl(canvas);
-    camera.upperRadiusLimit = 50;
+    camera.upperRadiusLimit = 600;
 
     // light environment
     var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
@@ -21,7 +21,7 @@ BjsApp.init = function() {
     light.groundColor = new BABYLON.Color3(0, 0, 0);
     scene.clearColor = new BABYLON.Color3(0, 0, 0);
 
-    var sun = new BABYLON.Mesh.CreateSphere('sun', 32, 8, scene);
+    var sun = new BABYLON.Mesh.CreateSphere('sun', 32, 69.57, scene);
     sun.orbit = {
         radius: 0,
         speed: 0.001,
@@ -34,7 +34,7 @@ BjsApp.init = function() {
     sunMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     sunMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     sun.material = sunMaterial;
-    sunLight.intensity = 10;
+    sunLight.intensity = 15;
     
 
     // var mercury = new BABYLON.Mesh.CreateSphere('mercury', 32, .5, scene);
@@ -66,9 +66,9 @@ BjsApp.init = function() {
       name: 'mercury',
       materialName: 'materialMercury',
       resolution: 32,
-      size: 0.5,
+      size: 0.488,
       position: {
-        x: 8,
+        x: 75.7,
         y: 0,
         z: 0
       }, 
@@ -80,9 +80,9 @@ BjsApp.init = function() {
       name: 'venus',
       materialName: 'materialVenus',
       resolution: 32,
-      size: 1,
+      size: 1.21,
       position: {
-        x: 10,
+        x: 80.8,
         y: 0,
         z: 0
       }, 
@@ -94,12 +94,27 @@ BjsApp.init = function() {
       name: 'earth',
       materialName: 'materialEarth',
       resolution: 32,
-      size: 1.5,
+      size: 1.27,
       position: {
-        x: 12,
+        x: 84.9,
         y: 0,
         z: 0
-      }, 
+      },
+      moons: {
+        moon: {
+          name: 'moon',
+          materialName: 'materialMoon',
+          resolution: 32,
+          size: 0.2,
+          position: {
+            x: 2,
+            y: 0,
+            z: 0
+          },
+          pathMaterial: 'images/moon.jpg', 
+          speed: 0.006   
+        }
+      },
       pathMaterial: 'images/earth.jpg', 
       speed: 0.006
     };
@@ -108,9 +123,9 @@ BjsApp.init = function() {
       name: 'mars',
       materialName: 'materialMars',
       resolution: 32,
-      size: 1.2,
+      size: 0.67,
       position: {
-        x: 14,
+        x: 92.7,
         y: 0,
         z: 0
       }, 
@@ -122,9 +137,9 @@ BjsApp.init = function() {
       name: 'jupiter',
       materialName: 'materialJupiter',
       resolution: 32,
-      size: 4.5,
+      size: 14.2,
       position: {
-        x: 18,
+        x: 147.8,
         y: 0,
         z: 0
       }, 
@@ -136,12 +151,24 @@ BjsApp.init = function() {
       name: 'saturn',
       materialName: 'materialSaturn',
       resolution: 32,
-      size: 3,
+      size: 10.8,
       position: {
-        x: 22,
+        x: 212.9,
         y: 0,
         z: 0
-      }, 
+      },
+      disc: {
+        createDisc: function(parentPlanet) {
+          var torus = BABYLON.Mesh.CreateTorus("torus", 10.8, 6, 64, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+          var discMaterial = new BABYLON.StandardMaterial('discMaterial', scene);
+          discMaterial.diffuseTexture = new BABYLON.Texture('images/saturnmap.jpg', scene);
+          discMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+          torus.position.z = 0;
+          torus.scaling.y = 0.1;
+          torus.parent = parentPlanet;
+          torus.material = discMaterial;
+        }
+      },
       pathMaterial: 'images/saturn.jpg', 
       speed: 0.003
     };
@@ -150,9 +177,9 @@ BjsApp.init = function() {
       name: 'uranus',
       materialName: 'materialUranus',
       resolution: 32,
-      size: 1.2,
+      size: 5.1,
       position: {
-        x: 26,
+        x: 350,
         y: 0,
         z: 0
       }, 
@@ -164,9 +191,9 @@ BjsApp.init = function() {
       name: 'neptune',
       materialName: 'materialNeptune',
       resolution: 32,
-      size: 1.1,
+      size: 4.9,
       position: {
-        x: 30,
+        x: 520.4,
         y: 0,
         z: 0
       }, 
@@ -190,6 +217,27 @@ BjsApp.init = function() {
         angle: 0
       };
       
+      // Discs around planets
+      if (planet.disc) {
+        planet.disc.createDisc(internalPlanet);
+      }
+
+      // Planet Moons
+      if (planet.moons) {
+        for (let prop in planet.moons) {
+          var moon = planet.moons[prop];
+          var planetMoon = new BABYLON.Mesh.CreateSphere(moon.name, moon.resolution, moon.size, scene);
+          planetMoon.parent = internalPlanet;
+          planetMoon.position.x = moon.position.x;
+          planetMoon.position.y = moon.position.y;
+          planetMoon.position.z = moon.position.z;
+          var moonMaterial = new BABYLON.StandardMaterial(moon.materialName, scene);
+          moonMaterial.diffuseTexture = new BABYLON.Texture(moon.pathMaterial, scene);
+          moonMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+          planetMoon.material = moonMaterial;
+        }
+      }
+      
       planets.push(internalPlanet);
       return internalPlanet;
     };
@@ -202,38 +250,22 @@ BjsApp.init = function() {
     var planetSaturn = createPlanet(saturn);
     var planetUranus = createPlanet(uranus);
     var planetNeptune = createPlanet(neptune);
-    console.log(planets);
-    // Stars
-  
-
-    for (let counter = 300; counter >= 0; counter--) {
-      var star = new BABYLON.Mesh.CreateSphere('star', 16, .2, scene );
-      star.position.x = Math.floor((Math.random() * 200) + 1)
-      star.position.y = Math.floor((Math.random() * 200) + 1)
-      star.position.z = Math.floor((Math.random() * 200) + 1)
-    }
-
-    for (let counter = 300; counter >= 0; counter--) {
-      var star = new BABYLON.Mesh.CreateSphere('star', 16, .1, scene );
-      star.position.x = Math.floor((Math.random() * -200) + 1)
-      star.position.y = Math.floor((Math.random() * -200) + 1)
-      star.position.z = Math.floor((Math.random() * -200) + 1)
-    }
-
-    // Skybox
-    // var skybox = BABYLON.Mesh.CreateBox('skybox', 1000, scene);
-    // var skyboxMaterial = new BABYLON.StandardMaterial('skyboxmat', scene);
-    // skyboxMaterial.backFaceCulling = false;
     
-    // SkyboxCamera
-    // skybox.infiniteDistance = true;
-    // skybox.material = skyboxMaterial;
+  
+    // Random Stars
+    for (let counter = 0; counter <= 200; counter++) {
+      var star = new BABYLON.Mesh.CreateSphere('star', 16, .2, scene );
+      star.position.x = parseInt(Math.random()*29)*20;
+      star.position.y = parseInt(Math.random()*29)*20;
+      star.position.z = parseInt(Math.random()*29)*20;
+    }
 
-    // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-
-    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture('images/sky', scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    for (let counter = 0; counter <= 200; counter++) {
+      var star = new BABYLON.Mesh.CreateSphere('star', 16, .2, scene );
+      star.position.x = parseInt(Math.random()*29)*-20;
+      star.position.y = parseInt(Math.random()*29)*-20;
+      star.position.z = parseInt(Math.random()*29)*-20;
+    }
 
     // Animations
     scene.beforeRender = function() {
@@ -241,8 +273,8 @@ BjsApp.init = function() {
         planets[counter].position.x = planets[counter].orbit.radius * Math.sin(planets[counter].orbit.angle);
         planets[counter].position.z = planets[counter].orbit.radius * Math.cos(planets[counter].orbit.angle);
         planets[counter].orbit.angle += planets[counter].orbit.speed;
-        planets[counter].rotation.z += Math.PI/4 * planets[counter].orbit.speed;
-        sun.rotation.z += Math.PI/4 * sun.orbit.speed;
+        planets[counter].rotate(BABYLON.Axis.Y, 0.02, BABYLON.Space.LOCAL);
+        sun.rotate(BABYLON.Axis.Y, 0.001, BABYLON.Space.LOCAL);
       }
     };
 
