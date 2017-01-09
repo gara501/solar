@@ -2,128 +2,132 @@ var BjsApp = BjsApp || {};
 BjsApp.init = function() {
   var play = 1;
   var createText = function (scene) {
+    var buttonPlanetWidth = 70;
+    var buttonPlanetHeight = 70;
+    var buttonPlanetTextSize = '12pt Arial';
+
     var buttonRect = new BABYLON.Rectangle2D(
-      { parent: canvas, id: "button", x: 800, y: 420, width: 200, height: 80, fill: "#0040F0FF", 
+      { parent: canvas, id: "button", x: 570, y: 420, width: 150, height: 80, fill: "#0040F0FF", 
       roundRadius: 10, 
       children: 
       [
-        new BABYLON.Text2D("Stop Animation", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Stop Animation", { fontName: "14pt Arial", marginAlignment: "h: center, v: center" })
       ]});
     var buttonCamera = new BABYLON.Rectangle2D(
-      { parent: canvas, id: "button", x: 800, y: 330, width: 200, height: 80, fill: "#0040F0FF", 
+      { parent: canvas, id: "button", x: 570, y: 330, width: 150, height: 80, fill: "#0040F0FF", 
       roundRadius: 10, 
       children: 
       [
-        new BABYLON.Text2D("See outside", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("See outside", { fontName: "14pt Arial", marginAlignment: "h: center, v: center" })
       ]});
 
     var bmercury = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "mercuryButton", x: 25, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "mercuryButton", x: 25, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.9, .2, .2, 1)),
       children: 
       [
-        new BABYLON.Text2D("Mercury", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Mercury", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]}); 
 
     var bvenus = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "venusButton", x: 130, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "venusButton", x: 100, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.8, .3, .3, 1)),
       children: 
       [
-        new BABYLON.Text2D("Venus", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Venus", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});   
     
     var bearth = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "earthButton", x: 235, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "earthButton", x: 175, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .2, .7, 1)),
       children: 
       [
-        new BABYLON.Text2D("Earth", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Earth", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var bmars = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "marsButton", x: 340, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "marsButton", x: 250, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.8, .2, .2, 1)),
       children: 
       [
-        new BABYLON.Text2D("Mars", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Mars", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var bjupiter = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "jupiterButton", x: 445, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "jupiterButton", x: 325, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.5, .5, .5, 1)),
       children: 
       [
-        new BABYLON.Text2D("Jupiter", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Jupiter", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var bsaturn = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "saturnButton", x: 550, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "saturnButton", x: 400, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.7, .5, .4, 1)),
       children: 
       [
-        new BABYLON.Text2D("Saturn", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Saturn", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var buranus = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "uranusButton", x: 655, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "uranusButton", x: 475, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .5, .9, 1)),
       children: 
       [
-        new BABYLON.Text2D("Uranus", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Uranus", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var bneptune = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "neptuneButton", x: 760, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "neptuneButton", x: 550, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .5, .8, 1)),
       children: 
       [
-        new BABYLON.Text2D("Neptune", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Neptune", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
 
     var bsun = new BABYLON.Ellipse2D(
-      { parent: canvas, id: "sunButton", x: 865, y: 80, width: 100, height: 100, subdivisions: 32, 
+      { parent: canvas, id: "sunButton", x: 625, y: 80, width: buttonPlanetWidth, height: buttonPlanetHeight, subdivisions: 32, 
       fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.9, .0, .0, 1)),
       children: 
       [
-        new BABYLON.Text2D("Sun", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+        new BABYLON.Text2D("Sun", { fontName: buttonPlanetTextSize, marginAlignment: "h: center, v: center" })
       ]});
     
     var canvas = new BABYLON.ScreenSpaceCanvas2D(scene, {
       id: "ScreenCanvas",
-      size: new BABYLON.Size(1000, 500),
+      size: new BABYLON.Size(720, 500),
       backgroundFill: "#4040408F",
       backgroundRoundRadius: 10,
       children: [
         new BABYLON.Text2D('Solar System', {
           id: "name",
           x: 30, y: 450,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         new BABYLON.Text2D('Size: 4.568 billion years', {
           id: "size",
           x: 30, y: 400,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         new BABYLON.Text2D('Distance to Kulper Cliff: 50 AU ', {
           id: "distance",
           x: 30, y: 350,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         new BABYLON.Text2D('Satellites: 470 ', {
           id: "rotation",
           x: 30, y: 300,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         new BABYLON.Text2D('Orbital Speed: 220 km/s ', {
           id: "orbit",
           x: 30, y: 250,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         new BABYLON.Text2D('Orbital Period: 225–250 Myr ', {
           id: "moons",
           x: 30, y: 200,
-          fontName: "20pt Arial",
+          fontName: "16pt Arial",
         }),
         bmercury,
         bvenus,
