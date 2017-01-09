@@ -273,24 +273,24 @@ BjsApp.init = function() {
   sunLight.intensity = 15;
 
   // Actions
-  sun.actionManager = new BABYLON.ActionManager(scene);
-  var onpickAction = new BABYLON.ExecuteCodeAction(
-  BABYLON.ActionManager.OnPickTrigger,
-  function(evt) {
-    if (evt.meshUnderPointer) {
-      // Find the clicked mesh
-      var meshClicked = evt.meshUnderPointer;
-      camera.radius = 100;
-      // Update the ammo label
-      canvasText.children[0].text = 'Name: ' + sun.info.name;
-      canvasText.children[1].text = 'Size: ' + sun.info.size;
-      canvasText.children[2].text = 'Distance: ' + sun.info.distance;
-      canvasText.children[3].text = 'Mass: ' + sun.info.mass;
-      canvasText.children[4].text = 'Temperature: ' + sun.info.temperature;
-      canvasText.children[5].text = 'Age: ' + sun.info.age;
-    }
-  });
-  sun.actionManager.registerAction(onpickAction);
+  // sun.actionManager = new BABYLON.ActionManager(scene);
+  // var onpickAction = new BABYLON.ExecuteCodeAction(
+  // BABYLON.ActionManager.OnPickTrigger,
+  // function(evt) {
+  //   if (evt.meshUnderPointer) {
+  //     // Find the clicked mesh
+  //     var meshClicked = evt.meshUnderPointer;
+  //     camera.radius = 100;
+  //     // Update the ammo label
+  //     canvasText.children[0].text = 'Name: ' + sun.info.name;
+  //     canvasText.children[1].text = 'Size: ' + sun.info.size;
+  //     canvasText.children[2].text = 'Distance: ' + sun.info.distance;
+  //     canvasText.children[3].text = 'Mass: ' + sun.info.mass;
+  //     canvasText.children[4].text = 'Temperature: ' + sun.info.temperature;
+  //     canvasText.children[5].text = 'Age: ' + sun.info.age;
+  //   }
+  // });
+  // sun.actionManager.registerAction(onpickAction);
   
   // Planets Objects
   var planets = [];
@@ -545,35 +545,8 @@ BjsApp.init = function() {
     }
     
     planets.push(internalPlanet);
-
-    // Actions
-    internalPlanet.actionManager = new BABYLON.ActionManager(scene);
-    var onpickAction = new BABYLON.ExecuteCodeAction(
-    BABYLON.ActionManager.OnPickTrigger,
-    function(evt) {
-      if (evt.meshUnderPointer) {
-        // Find the clicked mesh
-        var meshClicked = evt.meshUnderPointer;
-        canvasText.children[0].text = 'Name: ' + planet.info.name;
-        canvasText.children[1].text = 'Size: ' + planet.info.size;
-        canvasText.children[2].text = 'Distance: ' + planet.info.distance;
-        canvasText.children[3].text = 'Rotation: ' + planet.info.rotation;
-        canvasText.children[4].text = 'Orbit: ' + planet.info.orbit;
-        canvasText.children[5].text = 'Moons: ' + planet.info.moons;
-        camera.setTarget(internalPlanet);
-        if (planet.size < 3) {
-          camera.radius = 3;
-        } else {
-          camera.radius = 40;
-        }
-      }
-    });
-    internalPlanet.actionManager.registerAction(onpickAction);
-
     return internalPlanet;
   };
-
-  
 
   // Random Stars
   for (let counter = 0; counter <= 200; counter++) {
