@@ -3,15 +3,95 @@ BjsApp.init = function() {
   var play = 1;
   var createText = function (scene) {
     var buttonRect = new BABYLON.Rectangle2D(
-      { parent: canvas, id: "button", x: 100, y: 10, width: 200, height: 80, fill: "#0040F0FF", 
+      { parent: canvas, id: "button", x: 800, y: 420, width: 200, height: 80, fill: "#0040F0FF", 
       roundRadius: 10, 
       children: 
       [
         new BABYLON.Text2D("Stop Animation", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
       ]});
+    var buttonCamera = new BABYLON.Rectangle2D(
+      { parent: canvas, id: "button", x: 800, y: 330, width: 200, height: 80, fill: "#0040F0FF", 
+      roundRadius: 10, 
+      children: 
+      [
+        new BABYLON.Text2D("See outside", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bmercury = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "mercuryButton", x: 25, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.9, .2, .2, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Mercury", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]}); 
+
+    var bvenus = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "venusButton", x: 130, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.8, .3, .3, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Venus", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});   
+    
+    var bearth = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "earthButton", x: 235, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .2, .7, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Earth", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bmars = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "marsButton", x: 340, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.8, .2, .2, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Mars", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bjupiter = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "jupiterButton", x: 445, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.5, .5, .5, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Jupiter", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bsaturn = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "saturnButton", x: 550, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.7, .5, .4, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Saturn", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var buranus = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "uranusButton", x: 655, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .5, .9, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Uranus", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bneptune = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "neptuneButton", x: 760, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.2, .5, .8, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Neptune", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+
+    var bsun = new BABYLON.Ellipse2D(
+      { parent: canvas, id: "sunButton", x: 865, y: 80, width: 100, height: 100, subdivisions: 32, 
+      fill: BABYLON.Canvas2D.GetSolidColorBrush(new BABYLON.Color4(.9, .0, .0, 1)),
+      children: 
+      [
+        new BABYLON.Text2D("Sun", { fontName: "18pt Arial", marginAlignment: "h: center, v: center" })
+      ]});
+    
     var canvas = new BABYLON.ScreenSpaceCanvas2D(scene, {
       id: "ScreenCanvas",
-      size: new BABYLON.Size(400, 500),
+      size: new BABYLON.Size(1000, 500),
       backgroundFill: "#4040408F",
       backgroundRoundRadius: 10,
       children: [
@@ -45,7 +125,17 @@ BjsApp.init = function() {
           x: 30, y: 200,
           fontName: "20pt Arial",
         }),
-        buttonRect
+        bmercury,
+        bvenus,
+        bearth,
+        bmars,
+        bjupiter,
+        bsaturn,
+        bneptune,
+        buranus,
+        bsun,
+        buttonRect,
+        buttonCamera
       ]
     });
     // Button click event
@@ -59,6 +149,76 @@ BjsApp.init = function() {
       }
     }, BABYLON.PrimitivePointerInfo.PointerUp);
 
+    buttonCamera.pointerEventObservable.add(function (d, s) {
+        setCameraOnPlanet(sun, 600);
+        canvas.children[0].text = 'Name: Solar System';
+        canvas.children[1].text = 'Size: 4.568 billion years';
+        canvas.children[2].text = 'Distance: Distance to Kulper Cliff: 50 AU';
+        canvas.children[3].text = 'Satellites: 470';
+        canvas.children[4].text = 'Orbital Speed: 220 km/s';
+        canvas.children[5].text = 'Orbital Period: 225–250 Myr';
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+    
+    // Planets Buttons Events
+    bmercury.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetMercury, 1);
+      setInfo(mercury);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+    
+    bvenus.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetVenus, 2);
+      setInfo(venus);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+    
+    bearth.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetEarth, 2);
+      setInfo(earth);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    bmars.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetMars, 1);
+      setInfo(mars);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    bjupiter.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetJupiter, 20);
+      setInfo(jupiter);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    bsaturn.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetSaturn, 15);
+      setInfo(saturn);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    buranus.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetUranus, 8);
+      setInfo(uranus);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    bneptune.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(planetNeptune, 8);
+      setInfo(neptune);
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    bsun.pointerEventObservable.add(function (d, s) {
+      setCameraOnPlanet(sun, 100);
+      canvas.children[0].text = 'Name: ' + sun.info.name;
+      canvas.children[1].text = 'Size: ' + sun.info.size;
+      canvas.children[2].text = 'Distance: ' + sun.info.distance;
+      canvas.children[3].text = 'Mass: ' + sun.info.mass;
+      canvas.children[4].text = 'Temperature: ' + sun.info.temperature;
+      canvas.children[5].text = 'Age: ' + sun.info.age;
+    }, BABYLON.PrimitivePointerInfo.PointerUp);
+
+    function setInfo(planet) {
+      canvas.children[0].text = 'Name: ' + planet.info.name;
+      canvas.children[1].text = 'Size: ' + planet.info.size;
+      canvas.children[2].text = 'Distance: ' + planet.info.distance;
+      canvas.children[3].text = 'Rotation: ' + planet.info.rotation;
+      canvas.children[4].text = 'Orbit: ' + planet.info.orbit;
+      canvas.children[5].text = 'Moons: ' + planet.info.moons;
+    }
+    
     return canvas;
   };
 
@@ -75,10 +235,14 @@ BjsApp.init = function() {
   // Camera
   var camera = new BABYLON.ArcRotateCamera("Camera", 0,
   0, 0, BABYLON.Vector3.Zero(), scene);
-  camera.setPosition(new BABYLON.Vector3(0, 15, 500));
+  camera.setPosition(new BABYLON.Vector3(0, 15, 600));
   camera.attachControl(canvas);
   // camera.upperRadiusLimit = 2000;
-
+  // Set camera on planet
+  function setCameraOnPlanet(planet, distance) {
+    camera.setTarget(planet);
+    camera.radius = distance;
+  }
   // light environment
   var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
   light.intensity = 0.5;
@@ -333,8 +497,17 @@ BjsApp.init = function() {
     speed: 0.0005
   };
 
+  var planetMercury = createPlanet(mercury);
+  var planetVenus = createPlanet(venus);
+  var planetEarth = createPlanet(earth);
+  var planetMars = createPlanet(mars);
+  var planetJupiter = createPlanet(jupiter);
+  var planetSaturn = createPlanet(saturn);
+  var planetUranus = createPlanet(uranus);
+  var planetNeptune = createPlanet(neptune);
+
   // Planet Creation
-  var createPlanet = function(planet) {
+  function createPlanet(planet) {
     var internalPlanet = new BABYLON.Mesh.CreateSphere(planet.name, planet.resolution, planet.size, scene);
     internalPlanet.position.x = planet.position.x;
     internalPlanet.position.y = planet.position.y;
@@ -400,14 +573,6 @@ BjsApp.init = function() {
     return internalPlanet;
   };
 
-  var planetMercury = createPlanet(mercury);
-  var planetVenus = createPlanet(venus);
-  var planetEarth = createPlanet(earth);
-  var planetMars = createPlanet(mars);
-  var planetJupiter = createPlanet(jupiter);
-  var planetSaturn = createPlanet(saturn);
-  var planetUranus = createPlanet(uranus);
-  var planetNeptune = createPlanet(neptune);
   
 
   // Random Stars
